@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommandLine;
+﻿using CommandLine;
 using CommandLine.Text;
 
 namespace meteosat
@@ -37,11 +32,16 @@ namespace meteosat
             DefaultValue = 5,
             HelpText = "Number of Attempts to download images, including earlier hours.")]
         public int MaximumRetries { get; set; }
-        
+
         [Option('s', "desktop-style", Required = false,
             DefaultValue = 3,
             HelpText = "Desktop style for the wallpaper to use.")]
         public int DesktopStyle { get; set; }
+
+        [Option('h', "substract-hours", Required = false,
+            DefaultValue = 0,
+            HelpText = "How many hours to substract from the current time. Used for debugging.")]
+        public int HoursToSubstract { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }

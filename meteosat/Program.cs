@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+﻿using log4net.Config;
 using meteosat.Background;
 using meteosat.Image;
 
@@ -22,7 +15,8 @@ namespace meteosat
             if (!temporaryFileHandler.CreateFullPath(options.ImagePath, options.FileName)) return;
 
             var imageDownloader = new ImageDownloader();
-            imageDownloader.SaveToFile(options.Username, options.Password, temporaryFileHandler.FullPath, options.IsGridEnabled, options.MaximumRetries);
+            imageDownloader.SaveToFile(options.Username, options.Password, temporaryFileHandler.FullPath, 
+                options.IsGridEnabled, options.MaximumRetries, options.HoursToSubstract);
 
             var setter = new Setter();
             setter.SetWallpaper(temporaryFileHandler.FullPath, (Style)options.DesktopStyle);
