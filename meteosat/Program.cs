@@ -1,4 +1,5 @@
-﻿using log4net.Config;
+﻿using log4net;
+using log4net.Config;
 using meteosat.Background;
 using meteosat.Image;
 
@@ -6,8 +7,11 @@ namespace meteosat
 {
     class Program
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
         static void Main(string[] args)
         {
+            XmlConfigurator.Configure();
+
             var options = new Options();
             if (!CommandLine.Parser.Default.ParseArguments(args, options)) return;
 
