@@ -7,6 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using meteosat.Background;
+using meteosat.Image;
 
 namespace meteosat
 {
@@ -17,30 +18,16 @@ namespace meteosat
             var options = new Options();
             if (!CommandLine.Parser.Default.ParseArguments(args, options)) return;
 
-            string fullPath;
-            if (!GetFullPath(options.ImagePath, options.FileName, out fullPath)) return;
+            var temporaryFileHandler = new TemporaryFileHandler();
+            if (!temporaryFileHandler.CreateFullPath(options.ImagePath, options.FileName)) return;
 
             var imageDownloader = new ImageDownloader();
-            imageDownloader.SaveToFile(options.Username, options.Password, fullPath, options.IsGridEnabled, options.MaximumRetries);
+            imageDownloader.SaveToFile(options.Username, options.Password, temporaryFileHandler.FullPath, options.IsGridEnabled, options.MaximumRetries);
 
             var setter = new Setter();
-            setter.SetWallpaper(fullPath, (Style)options.DesktopStyle);
-        }
+            setter.SetWallpaper(temporaryFileHandler.FullPath, (Style)options.DesktopStyle);
 
-        private static bool GetFullPath(string imagePath, string fileName, out string fullPath)
-        {
-            try
-            {
-                Directory.CreateDirectory(imagePath);
-                fullPath = Path.Combine(imagePath, fileName);
-                return true;
-            }
-            catch (Exception exception)
-            {
-                Console.Out.WriteLine(exception);
-                fullPath = "";
-                return false;
-            }
+            temporaryFileHandler.DeleteImage();
         }
     }
 }
