@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -13,30 +14,33 @@ namespace meteosat
     {
         static void Main(string[] args)
         {
-            var argumentParser = new ArgumentParser();
-            if (args.Length == 0)
-            {
-                argumentParser.PrintHelp();
-                return;
-            }
+            var options = new Options();
+            if (!CommandLine.Parser.Default.ParseArguments(args, options)) return;
 
-            string username, password;
-            bool isGridEnabled;
-            argumentParser.ParseArgs(args, out username, out password, out isGridEnabled);
-            if (username == "" || password == "")
-            {
-                Console.Out.WriteLine("Error: You must specify both username and password.");
-                argumentParser.PrintHelp();
-                return;
-            }
-
-            const string imagePath = "C:\\Temp\\1.jpg";
-            const int maxRetries = 5;
+            string fullPath;
+            if (!GetFullPath(options.ImagePath, options.FileName, out fullPath)) return;
 
             var imageDownloader = new ImageDownloader();
-            imageDownloader.SaveToFile(username, password, imagePath, isGridEnabled, maxRetries);
+            imageDownloader.SaveToFile(options.Username, options.Password, fullPath, options.IsGridEnabled, options.MaximumRetries);
+
             var setter = new Setter();
-            setter.SetWallpaper(imagePath, Style.Fit);
+            setter.SetWallpaper(fullPath, (Style)options.DesktopStyle);
+        }
+
+        private static bool GetFullPath(string imagePath, string fileName, out string fullPath)
+        {
+            try
+            {
+                Directory.CreateDirectory(imagePath);
+                fullPath = Path.Combine(imagePath, fileName);
+                return true;
+            }
+            catch (Exception exception)
+            {
+                Console.Out.WriteLine(exception);
+                fullPath = "";
+                return false;
+            }
         }
     }
 }

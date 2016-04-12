@@ -4,11 +4,17 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace meteosat
 {
     class ImageDownloader
     {
+        private const string RetryingText = "Retrying...";
+        private const string QuittingText = "Quitting...";
+        private const string SuccessFormat = "---\nURL: {0}\nStatus: success";
+        private const string ErrorFormat = "---\nURL: {0}\nStatus: {1}\nResponse: {2}\nMessage: {3}";
+
         private CredentialCache GetCredential(string url, string username, string password)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
@@ -17,7 +23,7 @@ namespace meteosat
             return credentialCache;
         }
 
-        public void SaveToFile(string username, string password, string path, bool isGridEnabled, int maxRetries)
+        public void SaveToFile(string username, string password, string imagePath, bool isGridEnabled, int maxRetries)
         {
             using (var webClient = new WebClient())
             {
@@ -29,23 +35,15 @@ namespace meteosat
                     webClient.Credentials = GetCredential(url, username, password);
                     try
                     {
-                        webClient.DownloadFile(url, path);
+                        webClient.DownloadFile(url, imagePath);
                         hasDownloadedFile = true;
-                        Console.Out.WriteLine("---\nURL:{0}Status: success", url);
+                        Console.Out.WriteLine(SuccessFormat, url);
                     }
                     catch (WebException webException)
                     {
-                        Console.Out.WriteLine("---\nURL:{0}Status: {1}\nResponse: {2}\nMessage: {3}", url, 
-                            webException.Status, webException.Response, webException.Message);
+                        Console.Out.WriteLine(ErrorFormat, url, webException.Status, webException.Response, webException.Message);
                         ++numberOfRetries;
-                        if (numberOfRetries <= maxRetries)
-                        {
-                            Console.Out.WriteLine("Retrying...");
-                        }
-                        else
-                        {
-                            Console.Out.WriteLine("Quitting.");
-                        }
+                        Console.Out.WriteLine(numberOfRetries <= maxRetries ? RetryingText : QuittingText);
                     }
 
                 }
