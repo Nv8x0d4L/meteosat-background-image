@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using meteosat.Background;
 
 namespace meteosat
 {
@@ -12,7 +13,9 @@ namespace meteosat
     {
         static void Main(string[] args)
         {
-            Console.Out.WriteLine("Hello, world!");
+            const string imagePath = "C:\\Temp\\1.jpg";
+            var setter = new Setter();
+            setter.SetWallpaper(imagePath, Style.Fit);
         }
     }
 }
