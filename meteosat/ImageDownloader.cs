@@ -52,7 +52,7 @@ namespace meteosat
             }
         }
 
-        private String GetUrl(bool isGridEnabled, int retries = 0)
+        private string GetUrl(bool isGridEnabled, int retries = 0)
         {
             var currentDatetime = DateTime.UtcNow;
             var usedDateTime = currentDatetime.Subtract(TimeSpan.FromHours(retries * 3));

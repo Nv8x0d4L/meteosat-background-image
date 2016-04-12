@@ -13,11 +13,26 @@ namespace meteosat
     {
         static void Main(string[] args)
         {
-            var username = args[0];
-            var password = args[1];
-            var isGridEnabled = args[2] == "true";
-            var maxRetries = Int32.Parse(args[3]);
+            var argumentParser = new ArgumentParser();
+            if (args.Length == 0)
+            {
+                argumentParser.PrintHelp();
+                return;
+            }
+
+            string username, password;
+            bool isGridEnabled;
+            argumentParser.ParseArgs(args, out username, out password, out isGridEnabled);
+            if (username == "" || password == "")
+            {
+                Console.Out.WriteLine("Error: You must specify both username and password.");
+                argumentParser.PrintHelp();
+                return;
+            }
+
             const string imagePath = "C:\\Temp\\1.jpg";
+            const int maxRetries = 5;
+
             var imageDownloader = new ImageDownloader();
             imageDownloader.SaveToFile(username, password, imagePath, isGridEnabled, maxRetries);
             var setter = new Setter();
