@@ -21,10 +21,10 @@ namespace meteosat
         public Style DesktopStyle { get; set; }
         public int HoursToSubstract { get; set; }
 
-        public Options()
+        public Options(string baseDirectory)
         {
             this.Username = "qwerty";
-            InputDirectory = @"C:\Temp\meteosat\";
+            InputDirectory = baseDirectory;
             IsGridEnabled = false;
             MaximumRetries = 5;
             DesktopStyle = Style.Fit;

@@ -7,7 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:backgroundAlias="clr-namespace:meteosat.Background"
         mc:Ignorable="d"
-        Title="MainWindow" Height="288" Width="358">
+        Title="MeteosatToBackground" Height="358" Width="632" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Closing="Window_Closing">
     <Window.Resources>
         <ObjectDataProvider x:Key="DataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
