@@ -1,0 +1,84 @@
+﻿<Window x:Class="meteosat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:meteosat"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:backgroundAlias="clr-namespace:meteosat.Background"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="288" Width="358">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="DataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="backgroundAlias:Style"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <system:String x:Key="Tooltip-Username">Specifies the username.</system:String>
+        <system:String x:Key="Tooltip-Password">Specifies the password.</system:String>
+        <system:String x:Key="Tooltip-Temp-Dir">The directory to store the images.</system:String>
+        <system:String x:Key="Tooltip-Enable-Grid">If this option is present, then an image with grid will be used.</system:String>
+        <system:String x:Key="Tooltip-Maximum-Retries">Number of Attempts to download images, including earlier hours.</system:String>
+        <system:String x:Key="Tooltip-Desktop-Style">Desktop style for the wallpaper to use.</system:String>
+        <system:String x:Key="Tooltip-Substract-Hours">How many hours to substract from the current time. Used for debugging.</system:String>
+        <system:Double x:Key="Label-Length">120</system:Double>
+        <system:Double x:Key="Input-Length">200</system:Double>
+    </Window.Resources>
+    <StackPanel DataContext="{Binding AppOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}">
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Username}">
+            <Label Width="{StaticResource Label-Length}" Content="Username:"/>
+            <TextBox Width="{StaticResource Input-Length}" Margin="5" Text="{Binding Username}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Password}">
+            <Label Width="{StaticResource Label-Length}" Content="Password:" />
+            <PasswordBox Width="{StaticResource Input-Length}" Name="InputPassword" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Temp-Dir}">
+            <Label Width="{StaticResource Label-Length}" Content="Directory:"/>
+            <TextBox Width="{StaticResource Input-Length}" Margin="5"
+                     Text="{Binding InputDirectory}" IsReadOnly="True"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Enable-Grid}">
+            <Label Width="{StaticResource Label-Length}" Content="Show Grid:"/>
+            <CheckBox Width="{StaticResource Input-Length}"
+                      Margin="5" IsChecked="{Binding IsGridEnabled}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Maximum-Retries}">
+            <Label Width="{StaticResource Label-Length}" Content="Maximum Retries:"/>
+            <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
+                <Slider Name="InputMaximumRetries" Margin="5" Value="{Binding MaximumRetries}"
+                        Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" Width="150"
+                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                <Label Content="{Binding Value, ElementName=InputMaximumRetries, StringFormat=\{0:00}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Desktop-Style}">
+            <Label Width="{StaticResource Label-Length}" Content="Desktop-Style:"/>
+            <ComboBox Width="{StaticResource Input-Length}" Margin="5" 
+                      ItemsSource="{Binding Source={StaticResource DataFromEnum}}" SelectedItem="{Binding DesktopStyle}"
+                      IsTextSearchEnabled="False" SelectedIndex="2"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Substract-Hours}">
+            <Label Width="{StaticResource Label-Length}" Content="Hours to Substract:"/>
+            <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
+                <Slider Name="InputHoursToSubstract" Margin="5" 
+                        Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" Width="150" Value="{Binding HoursToSubstract}" 
+                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                <Label Content="{Binding Value, ElementName=InputHoursToSubstract, StringFormat=\{0:00}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Width="{StaticResource Input-Length}" Name="Start" HorizontalAlignment="Right" 
+                    MinWidth="80" Margin="3" Content="Send" Click="Start_Click"  />
+        </StackPanel>
+    </StackPanel>
+</Window>

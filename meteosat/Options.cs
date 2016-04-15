@@ -1,56 +1,48 @@
-﻿using CommandLine;
-using CommandLine.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Text;
+using System.Threading.Tasks;
+using meteosat.Annotations;
+using meteosat.Background;
 
 namespace meteosat
 {
-    internal class Options
+    public class Options : INotifyPropertyChanged
     {
-        [Option('u', "username", Required = true,
-            HelpText = "Specifies the username.")]
         public string Username { get; set; }
-
-        [Option('p', "password", Required = true,
-            HelpText = "Specifies the password.")]
-        public string Password { get; set; }
-
-        [Option('t', "temp-dir", Required = false,
-            DefaultValue = "C:\\Temp",
-            HelpText = "The directory to temporarily store the image.")]
-        public string ImagePath { get; set; }
-
-        [Option('f', "file-name", Required = false,
-            DefaultValue = "meteosat.jpg",
-            HelpText = "The name for the temporary file.")]
-        public string FileName { get; set; }
-
-        [Option('g', "enable-grid", Required = false,
-            DefaultValue = false,
-            HelpText = "If this option is present, then an image with grid will be used.")]
+        public SecureString Password { get; set; }
+        public string InputDirectory { get; set; }
         public bool IsGridEnabled { get; set; }
-
-        [Option('r', "maximum-retries", Required = false,
-            DefaultValue = 5,
-            HelpText = "Number of Attempts to download images, including earlier hours.")]
         public int MaximumRetries { get; set; }
-
-        [Option('s', "desktop-style", Required = false,
-            DefaultValue = 3,
-            HelpText = "Desktop style for the wallpaper to use.")]
-        public int DesktopStyle { get; set; }
-
-        [Option('h', "substract-hours", Required = false,
-            DefaultValue = 0,
-            HelpText = "How many hours to substract from the current time. Used for debugging.")]
+        public Style DesktopStyle { get; set; }
         public int HoursToSubstract { get; set; }
 
-        [ParserState]
-        public IParserState LastParserState { get; set; }
-
-        [HelpOption]
-        public string GetUsage()
+        public Options()
         {
-            return HelpText.AutoBuild(this,
-                (HelpText current) => HelpText.DefaultParsingErrorsHandler(this, current));
+            this.Username = "qwerty";
+            InputDirectory = @"C:\Temp\meteosat\";
+            IsGridEnabled = false;
+            MaximumRetries = 5;
+            DesktopStyle = Style.Fit;
+            HoursToSubstract = 0;
+
+            Password = new SecureString();
+            Password.AppendChar('a');
+            Password.AppendChar('s');
+            Password.AppendChar('d');
+            Password.AppendChar('f');
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
