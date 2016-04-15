@@ -13,13 +13,107 @@ namespace meteosat
 {
     public class Options : INotifyPropertyChanged
     {
-        public string Username { get; set; }
-        public SecureString Password { get; set; }
-        public string InputDirectory { get; set; }
-        public bool IsGridEnabled { get; set; }
-        public int MaximumRetries { get; set; }
-        public Style DesktopStyle { get; set; }
-        public int HoursToSubstract { get; set; }
+        private string _username;
+        public string Username
+        {
+            get { return this._username; }
+            set
+            {
+                if (value != this._username)
+                {
+                    this._username = value;
+                    OnPropertyChanged(nameof(Username));
+                }
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                if (value != _password)
+                {
+                    _password = value;
+                    OnPropertyChanged(nameof(Password));
+                }
+            }
+        }
+
+        private string _inputDirectory;
+        public string InputDirectory
+        {
+            get { return _inputDirectory; }
+            set
+            {
+                if (value != _inputDirectory)
+                {
+                    _inputDirectory = value;
+                    OnPropertyChanged(nameof(InputDirectory));
+                }
+            }
+        }
+
+
+        private bool _isGridEnabled;
+        public bool IsGridEnabled
+        {
+            get { return _isGridEnabled; }
+            set
+            {
+                if (value != _isGridEnabled)
+                {
+                    _isGridEnabled = value;
+                    OnPropertyChanged(nameof(IsGridEnabled));
+                }
+            }
+        }
+
+
+
+        private int _maximumRetries;
+        public int MaximumRetries
+        {
+            get { return _maximumRetries; }
+            set
+            {
+                if (value != _maximumRetries)
+                {
+                    _maximumRetries = value;
+                    OnPropertyChanged(nameof(MaximumRetries));
+                }
+            }
+        }
+
+        private Style _desktopStyle;
+        public Style DesktopStyle
+        {
+            get { return _desktopStyle; }
+            set
+            {
+                if (value != _desktopStyle)
+                {
+                    _desktopStyle = value;
+                    OnPropertyChanged(nameof(DesktopStyle));
+                }
+            }
+        }
+
+
+        private int _hoursToSubstract;
+        public int HoursToSubstract
+        {
+            get { return _hoursToSubstract; }
+            set
+            {
+                if (value != _hoursToSubstract)
+                {
+                    _hoursToSubstract = value;
+                    OnPropertyChanged(nameof(HoursToSubstract));
+                }
+            }
+        }
 
         public Options(string baseDirectory)
         {
@@ -30,11 +124,7 @@ namespace meteosat
             DesktopStyle = Style.Fit;
             HoursToSubstract = 0;
 
-            Password = new SecureString();
-            Password.AppendChar('a');
-            Password.AppendChar('s');
-            Password.AppendChar('d');
-            Password.AppendChar('f');
+            Password = "asdf";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

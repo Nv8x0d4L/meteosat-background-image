@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +20,9 @@ using log4net;
 using log4net.Config;
 using meteosat.Background;
 using meteosat.Image;
+using Newtonsoft.Json;
 using Application = System.Windows.Application;
+using Path = System.IO.Path;
 using Setter = meteosat.Background.Setter;
 using Style = meteosat.Background.Style;
 
@@ -32,7 +36,9 @@ namespace meteosat
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindow));
 
         public Options AppOptions { get; set; }
+        public EncryptionHandler Encryption { get; set; }
         public NotifyIcon NotifyIcon { get; set; }
+        private ConfigHandler Config { get; set; }
 
         public MainWindow()
         {
@@ -41,6 +47,10 @@ namespace meteosat
             AppOptions = new Options(AppDomain.CurrentDomain.BaseDirectory);
             InitializeNotifyIcon();
             Application.Current.Exit += Current_Exit;
+
+            Encryption = new EncryptionHandler();
+            string configPath = Path.Combine(AppOptions.InputDirectory, "meteosat.config");
+            Config = new ConfigHandler(configPath);
         }
 
         private void Current_Exit(object sender, ExitEventArgs e)
@@ -101,5 +111,28 @@ namespace meteosat
             this.Hide();
             e.Cancel = true;
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+                AppOptions.Password = Encryption.Encrypt(InputPassword.Password);
+                var json = JsonConvert.SerializeObject(AppOptions);
+                this.Config.Write(json);
+        }
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            var json = this.Config.Read();
+            var tmpOptions = JsonConvert.DeserializeObject<Options>(json);
+            AppOptions.Username = tmpOptions.Username;
+            AppOptions.InputDirectory = tmpOptions.InputDirectory;
+            AppOptions.IsGridEnabled = tmpOptions.IsGridEnabled;
+            AppOptions.MaximumRetries = tmpOptions.MaximumRetries;
+            AppOptions.DesktopStyle = tmpOptions.DesktopStyle;
+            AppOptions.HoursToSubstract = tmpOptions.HoursToSubstract;
+            AppOptions.Password = "";
+            InputPassword.Password = Encryption.Decrypt(tmpOptions.Password);
+        }
     }
+
+    
 }

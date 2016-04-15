@@ -29,7 +29,7 @@
     <StackPanel DataContext="{Binding AppOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}}">
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Username}">
             <Label Width="{StaticResource Label-Length}" Content="Username:"/>
-            <TextBox Width="{StaticResource Input-Length}" Margin="5" Text="{Binding Username}"/>
+            <TextBox Width="{StaticResource Input-Length}" Margin="5" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Password}">
@@ -79,6 +79,10 @@
         <StackPanel Orientation="Horizontal">
             <Button Width="{StaticResource Input-Length}" Name="Start" HorizontalAlignment="Right" 
                     MinWidth="80" Margin="3" Content="Send" Click="Start_Click"  />
+            <Button Width="{StaticResource Input-Length}" Name="Save" HorizontalAlignment="Right" 
+                    MinWidth="80" Margin="3" Content="Save" Click="Save_Click"/>
+            <Button Width="{StaticResource Input-Length}" Name="Load" HorizontalAlignment="Right" 
+                    MinWidth="80" Margin="3" Content="Load" Click="Load_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>
