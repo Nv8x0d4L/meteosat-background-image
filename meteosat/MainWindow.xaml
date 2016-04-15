@@ -77,12 +77,17 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-            <Button Width="{StaticResource Input-Length}" Name="Start" HorizontalAlignment="Right" 
-                    MinWidth="80" Margin="3" Content="Send" Click="Start_Click"  />
             <Button Width="{StaticResource Input-Length}" Name="Save" HorizontalAlignment="Right" 
                     MinWidth="80" Margin="3" Content="Save" Click="Save_Click"/>
             <Button Width="{StaticResource Input-Length}" Name="Load" HorizontalAlignment="Right" 
                     MinWidth="80" Margin="3" Content="Load" Click="Load_Click"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Width="{StaticResource Input-Length}" Name="Start" HorizontalAlignment="Right" 
+                    MinWidth="80" Margin="3" Content="Send" Click="Start_Click"  />
+            <Button Width="{StaticResource Input-Length}" Name="Exit" HorizontalAlignment="Right" 
+                    MinWidth="80" Margin="3" Content="Exit" Click="Exit_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -132,6 +132,11 @@ namespace meteosat
             AppOptions.Password = "";
             InputPassword.Password = Encryption.Decrypt(tmpOptions.Password);
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(0);
+        }
     }
 
     
