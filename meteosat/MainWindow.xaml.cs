@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace meteosat
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindow));
 
+        private BackgroundWorker Worker { get; set; }
+
         public Options AppOptions { get; set; }
         public EncryptionHandler Encryption { get; set; }
         public NotifyIcon NotifyIcon { get; set; }
@@ -51,6 +54,23 @@ namespace meteosat
             Encryption = new EncryptionHandler();
             string configPath = Path.Combine(AppOptions.InputDirectory, "meteosat.config");
             Config = new ConfigHandler(configPath);
+
+            Worker = new BackgroundWorker();
+            Worker.DoWork += Worker_DoWork;
+        }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Options myOptions = (Options)e.Argument;
+            var temporaryFileHandler = new TemporaryFileHandler();
+            if (!temporaryFileHandler.CreateFullPath(myOptions.InputDirectory, "meteosat.jpg")) return;
+
+            var imageDownloader = new ImageDownloader();
+            imageDownloader.SaveToFile(myOptions.Username, myOptions.Password, temporaryFileHandler.FullPath,
+                myOptions.IsGridEnabled, myOptions.MaximumRetries, myOptions.HoursToSubstract);
+
+            var setter = new Setter();
+            setter.SetWallpaper(temporaryFileHandler.FullPath, AppOptions.DesktopStyle);
         }
 
         private void Current_Exit(object sender, ExitEventArgs e)
@@ -71,7 +91,6 @@ namespace meteosat
 
         private void InitializeNotifyIcon()
         {
-
             NotifyIcon = new NotifyIcon();
             NotifyIcon.Icon = (Icon)Properties.Resources.ResourceManager.GetObject("TrayIcon");
             NotifyIcon.Visible = true;
@@ -95,15 +114,8 @@ namespace meteosat
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            var temporaryFileHandler = new TemporaryFileHandler();
-            if (!temporaryFileHandler.CreateFullPath(AppOptions.InputDirectory, "meteosat.jpg")) return;
-
-            var imageDownloader = new ImageDownloader();
-            imageDownloader.SaveToFile(AppOptions.Username, InputPassword.Password, temporaryFileHandler.FullPath,
-                AppOptions.IsGridEnabled, AppOptions.MaximumRetries, AppOptions.HoursToSubstract);
-
-            var setter = new Setter();
-            setter.SetWallpaper(temporaryFileHandler.FullPath, AppOptions.DesktopStyle);
+            AppOptions.Password = InputPassword.Password;
+            Worker.RunWorkerAsync(AppOptions);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
