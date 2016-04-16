@@ -23,6 +23,7 @@ using meteosat.Background;
 using meteosat.Image;
 using Newtonsoft.Json;
 using Application = System.Windows.Application;
+using ContextMenu = System.Windows.Forms.ContextMenu;
 using Path = System.IO.Path;
 using Setter = meteosat.Background.Setter;
 using Style = meteosat.Background.Style;
@@ -91,15 +92,24 @@ namespace meteosat
 
         private void InitializeNotifyIcon()
         {
-            NotifyIcon = new NotifyIcon();
-            NotifyIcon.Icon = (Icon)Properties.Resources.ResourceManager.GetObject("TrayIcon");
-            NotifyIcon.Visible = true;
-            NotifyIcon.DoubleClick +=
-                (sender, args) =>
-                {
-                    this.Show();
-                    this.WindowState = WindowState.Normal;
-                };
+            var contextMenu = new ContextMenu();
+            contextMenu.MenuItems.Add("Show", (s, e) => ShowWindow());
+            contextMenu.MenuItems.Add("Hide", (s, e) => this.Hide());
+            contextMenu.MenuItems.Add("Exit", (s, e) => Application.Current.Shutdown(0));
+
+            NotifyIcon = new NotifyIcon
+            {
+                Icon = (Icon) Properties.Resources.ResourceManager.GetObject("TrayIcon"),
+                Visible = true,
+                ContextMenu = contextMenu
+            };
+            NotifyIcon.DoubleClick += (s, e) => ShowWindow();
+        }
+
+        private void ShowWindow()
+        {
+            this.Show();
+            this.WindowState = WindowState.Normal;
         }
 
         protected override void OnStateChanged(EventArgs e)
