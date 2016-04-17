@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
-namespace meteosat.Background
+namespace meteosat.model
 {
     public class Setter
     {

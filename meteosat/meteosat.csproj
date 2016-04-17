@@ -80,22 +80,30 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConfigHandler.cs" />
-    <Compile Include="EncryptionHandler.cs" />
-    <Compile Include="Image\ImageDownloader.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options.cs" />
+    <Compile Include="model\Config\ConfigFileHandler.cs" />
+    <Compile Include="model\Config\ConfigHandler.cs" />
+    <Compile Include="model\Config\EncryptionHandler.cs" />
+    <Compile Include="model\ImageDownloader.cs" />
+    <Compile Include="model\Options.cs" />
+    <Compile Include="model\Setter.cs" />
+    <Compile Include="model\Style.cs" />
+    <Compile Include="model\TemporaryFileHandler.cs" />
+    <Compile Include="model\Worker.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Background\Setter.cs" />
-    <Compile Include="Background\Style.cs" />
-    <Compile Include="Image\TemporaryFileHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="viewModel\CommandHandler\EmptyCommandHandler.cs" />
+    <Compile Include="viewModel\CommandHandler\ParameterizedCommandHandler.cs" />
+    <Compile Include="viewModel\MainWindowViewModel.cs" />
+    <Compile Include="viewModel\modelObjects\OptionsViewModel.cs" />
+    <Compile Include="viewModel\modelObjects\StyleConverter.cs" />
+    <Compile Include="viewModel\modelObjects\StyleViewModel.cs" />
+    <Compile Include="view\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -106,10 +114,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -131,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TrayIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="view\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

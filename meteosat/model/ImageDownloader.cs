@@ -2,7 +2,7 @@
 using System.Net;
 using log4net;
 
-namespace meteosat.Image
+namespace meteosat.model
 {
     public class ImageDownloader
     {
@@ -55,7 +55,7 @@ namespace meteosat.Image
             var currentDatetime = DateTime.UtcNow;
             var usedDateTime = currentDatetime.Subtract(TimeSpan.FromHours(hoursToSubstract));
             usedDateTime = usedDateTime.Subtract(TimeSpan.FromHours(numberOfRetries * 3));
-            var fixedHour = ((int) (usedDateTime.Hour/3))*3;
+            var fixedHour = ((int)(usedDateTime.Hour / 3)) * 3;
             var lastImageHourAvailable = String.Format(fixedHour == 0 ? UrlZeroFormat : UrlNoFillFormat, fixedHour);
             var gridTextForUrl = isGridEnabled ? "_grid" : "";
             return String.Format(

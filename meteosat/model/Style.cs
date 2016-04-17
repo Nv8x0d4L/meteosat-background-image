@@ -1,4 +1,4 @@
-﻿namespace meteosat.Background
+﻿namespace meteosat.model
 {
     public enum Style : int
     {

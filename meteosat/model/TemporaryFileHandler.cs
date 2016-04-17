@@ -2,7 +2,7 @@
 using System.IO;
 using log4net;
 
-namespace meteosat.Image
+namespace meteosat.model
 {
     public class TemporaryFileHandler
     {

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using log4net;
 
-namespace meteosat
+namespace meteosat.model.Config
 {
-    public class ConfigHandler
+    public class ConfigFileHandler
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (ConfigHandler));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ConfigFileHandler));
 
         private string FullPath { get; set; }
 
-        public ConfigHandler(string fullPath)
+        public ConfigFileHandler(string fullPath)
         {
             FullPath = fullPath;
         }
