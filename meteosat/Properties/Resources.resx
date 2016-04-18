@@ -135,6 +135,9 @@
   <data name="DefaultOptionUsername" xml:space="preserve">
     <value>qwerty</value>
   </data>
+  <data name="DefaultTimerDefaultTextNoDate" xml:space="preserve">
+    <value>-</value>
+  </data>
   <data name="DefaultTimerInterval" xml:space="preserve">
     <value>5</value>
   </data>

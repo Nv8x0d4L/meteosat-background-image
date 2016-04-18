@@ -31,68 +31,51 @@
         <system:Double x:Key="Slider-Small-Length">260</system:Double>
     </Window.Resources>
     <StackPanel DataContext="{StaticResource MainWindowViewModel}">
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}" />
+            </MenuItem>
+            
+            <MenuItem Header="Configuration">
+                <MenuItem Header="Load Configuration" 
+                          Command="{Binding ConfigLoadCommand}"
+                          CommandParameter="{Binding ElementName=InputPassword}" />
+                <MenuItem Header="Save Configuration" 
+                          Command="{Binding ConfigSaveCommand}"
+                          CommandParameter="{Binding ElementName=InputPassword}" />
+            </MenuItem>
+
+            <MenuItem Header="Timer">
+                <MenuItem Header="Start Timer" 
+                          Command="{Binding TimerStartCommand}"
+                          CommandParameter="{Binding ElementName=InputPassword}" />
+                <MenuItem Header="Stop Timer"
+                          Command="{Binding TimerStopCommand}" />
+                <Separator />
+                <MenuItem Header="Start one time"
+                          Command="{Binding SendCommand}"
+                          CommandParameter="{Binding ElementName=InputPassword}" />
+            </MenuItem>
+            
+            <MenuItem Header="Help">
+                <MenuItem Header="About meteosat"
+                          Command="{Binding ShowAboutCommand}"/>
+            </MenuItem>
+        </Menu>
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Username}">
-            <Label Width="{StaticResource Label-Length}" Content="Username:"/>
+            <Label Width="{StaticResource Label-Length}" Content="Username on website"/>
             <TextBox Width="{StaticResource Input-Length}" Margin="5" Text="{Binding Options.Username}"/>
         </StackPanel>
-
+        
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Password}">
-            <Label Width="{StaticResource Label-Length}" Content="Password:" />
+            <Label Width="{StaticResource Label-Length}" Content="Password on website:" />
             <PasswordBox Width="{StaticResource Input-Length}" Name="InputPassword" Margin="5"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Temp-Dir}">
-            <Label Width="{StaticResource Label-Length}" Content="Directory:"/>
-            <TextBox Width="{StaticResource Input-Length}" Margin="5"
-                        Text="{Binding Options.InputDirectory}" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Enable-Grid}">
             <Label Width="{StaticResource Label-Length}" Content="Show Grid:"/>
             <CheckBox Width="{StaticResource Input-Length}"
                         Margin="5" IsChecked="{Binding Options.IsGridEnabled}"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Maximum-Retries}">
-            <Label Width="{StaticResource Label-Length}" Content="Maximum Retries:"/>
-            <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
-                <Slider Margin="5" Value="{Binding Options.MaximumRetries}"
-                        Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
-                        Width="{StaticResource Slider-Small-Length}"
-                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
-                <Label Content="{Binding Options.MaximumRetries, StringFormat=\{0:00}"/>
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Desktop-Style}">
-            <Label Width="{StaticResource Label-Length}" Content="Desktop-Style:"/>
-            <ComboBox Width="{StaticResource Input-Length}" Margin="5" 
-                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}" SelectedItem="{Binding Options.DesktopStyle}"
-                        IsTextSearchEnabled="False" SelectedIndex="2"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Subtract-Hours}">
-            <Label Width="{StaticResource Label-Length}" Content="Hours to Subtract:"/>
-            <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
-                <Slider Margin="5" Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
-                        Width="{StaticResource Slider-Small-Length}" Value="{Binding Options.HoursToSubtract}" 
-                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
-                <Label Content="{Binding Options.HoursToSubtract, StringFormat=\{0:00}"/>
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal">
-            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
-                    Content="Save" Command="{Binding SaveCommand}"  
-                    CommandParameter="{Binding ElementName=InputPassword}"/>
-            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
-                    Content="Load" Command="{Binding LoadCommand}"
-                    CommandParameter="{Binding ElementName=InputPassword}"/>
-            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3"
-                    Content="Send Now" Command="{Binding SendCommand}" 
-                    CommandParameter="{Binding ElementName=InputPassword}"/>
-            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
-                    Content="Exit" Command="{Binding ExitCommand}" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Timer-Interval}">
@@ -102,8 +85,60 @@
                         Minimum="5" Maximum="60" SmallChange="5" LargeChange="15" 
                         Width="{StaticResource Slider-Small-Length}"
                         TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
-                <Label Content="{Binding Timer.Interval, StringFormat=\{0:00}"/>
+                <Label Content="{Binding Timer.Interval, StringFormat=\{0:00\}}"/>
             </StackPanel>
         </StackPanel>
+        
+        <Expander BorderThickness="0">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Temp-Dir}">
+                    <Label Width="{StaticResource Label-Length}" Content="Directory:"/>
+                    <TextBox Width="{StaticResource Input-Length}" Margin="5"
+                            Text="{Binding Options.InputDirectory}" IsReadOnly="True"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Maximum-Retries}">
+                    <Label Width="{StaticResource Label-Length}" Content="Maximum Retries:"/>
+                    <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
+                        <Slider Margin="5" Value="{Binding Options.MaximumRetries}"
+                            Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
+                            Width="{StaticResource Slider-Small-Length}"
+                            TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                        <Label Content="{Binding Options.MaximumRetries, StringFormat=\{0:00}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Desktop-Style}">
+                    <Label Width="{StaticResource Label-Length}" Content="Desktop-Style:"/>
+                    <ComboBox Width="{StaticResource Input-Length}" Margin="5" 
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum}}" SelectedItem="{Binding Options.DesktopStyle}"
+                            IsTextSearchEnabled="False" SelectedIndex="2"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Subtract-Hours}">
+                    <Label Width="{StaticResource Label-Length}" Content="Hours to Subtract:"/>
+                    <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
+                        <Slider Margin="5" Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
+                            Width="{StaticResource Slider-Small-Length}" Value="{Binding Options.HoursToSubtract}" 
+                            TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                        <Label Content="{Binding Options.HoursToSubtract, StringFormat=\{0:00}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Expander>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Start Timer" Margin="5"
+                    Command="{Binding TimerStartCommand}" 
+                    CommandParameter="{Binding ElementName=InputPassword}"/>
+            <Button Content="Stop Timer" Margin="5"
+                    Command="{Binding TimerStopCommand}" />
+        </StackPanel>
+
+        <StatusBar>
+            <Label Content="{Binding Path=Timer.LastRunString}" ContentStringFormat="Last run: {0}" />
+            <Label Content="{Binding Path=Timer.NextRunString}" ContentStringFormat="Next run: {0}" />
+            <Label Content="{Binding Path=Timer.NextRunInString}" ContentStringFormat="Next run in: {0}" />
+        </StatusBar>
     </StackPanel>
 </Window>

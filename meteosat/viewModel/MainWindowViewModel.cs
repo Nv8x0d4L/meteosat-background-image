@@ -19,8 +19,13 @@ namespace meteosat.viewModel
 
         public ParameterizedCommandHandler<PasswordBox> SendCommand { get; set; }
         public EmptyCommandHandler ExitCommand { get; set; }
-        public ParameterizedCommandHandler<PasswordBox> SaveCommand { get; set; }
-        public ParameterizedCommandHandler<PasswordBox> LoadCommand { get; set; }
+        public ParameterizedCommandHandler<PasswordBox> ConfigSaveCommand { get; set; }
+        public ParameterizedCommandHandler<PasswordBox> ConfigLoadCommand { get; set; }
+        public EmptyCommandHandler TimerStopCommand { get; set; }
+        public ParameterizedCommandHandler<PasswordBox> TimerStartCommand { get; set; }
+        public EmptyCommandHandler ShowAboutCommand { get; set; }
+        
+        private AboutBox About { get; set; }
 
         private ConfigHandler _configHandler { get; set; }
 
@@ -28,22 +33,56 @@ namespace meteosat.viewModel
         {
             Options = new OptionsViewModel(AppDomain.CurrentDomain.BaseDirectory);
             Timer = new TimerViewModel();
+            Timer.Tick += dispatcherTimer_Tick;
+
             _configHandler = new ConfigHandler(Options.InputDirectory);
 
             SendCommand = new ParameterizedCommandHandler<PasswordBox>(SendAction);
             ExitCommand = new EmptyCommandHandler(ExitAction);
-            SaveCommand = new ParameterizedCommandHandler<PasswordBox>(SaveAction);
-            LoadCommand = new ParameterizedCommandHandler<PasswordBox>(LoadAction);
+            ConfigSaveCommand = new ParameterizedCommandHandler<PasswordBox>(ConfigSaveAction);
+            ConfigLoadCommand = new ParameterizedCommandHandler<PasswordBox>(ConfigLoadAction);
+            TimerStartCommand = new ParameterizedCommandHandler<PasswordBox>(TimerStartAction);
+            TimerStopCommand = new EmptyCommandHandler(TimerStop);
+            ShowAboutCommand = new EmptyCommandHandler(ShowAboutAction);
+
+            About = new AboutBox();
         }
 
-        private void SaveAction(PasswordBox parameter)
+        private void ShowAboutAction()
+        {
+            About.ShowDialog();
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            var worker = new Worker(Options.OptionsModel);
+            var backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerAsync(worker);
+        }
+
+        private void TimerStop()
+        {
+            Timer.Stop();
+        }
+
+        private void TimerStartAction(PasswordBox parameter)
+        {
+            Options.Password = parameter.Password;
+            if (!Timer.IsEnabled)
+            {
+                Timer.Start();
+            }
+        }
+
+        private void ConfigSaveAction(PasswordBox parameter)
         {
             Logger.Info("Save");
             Options.Password = parameter.Password;
             _configHandler.WriteConfig(Options.OptionsModel);
         }
 
-        private void LoadAction(PasswordBox parameter)
+        private void ConfigLoadAction(PasswordBox parameter)
         {
             Logger.Info("Load");
             var tempOptionsModel = _configHandler.ReadConfig();
@@ -53,7 +92,6 @@ namespace meteosat.viewModel
             Options.MaximumRetries = tempOptionsModel.MaximumRetries;
             Options.HoursToSubtract = tempOptionsModel.HoursToSubtract;
             Options.SetDesktopStyleWithModel(tempOptionsModel.DesktopStyle);
-            Options.Password = "";
             parameter.Password = tempOptionsModel.Password;
         }
 
@@ -75,6 +113,7 @@ namespace meteosat.viewModel
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Timer.SetRunToNow();
             var worker = (Worker) e.Argument;
             worker.DoWork();
         }

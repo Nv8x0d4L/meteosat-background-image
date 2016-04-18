@@ -115,6 +115,15 @@ namespace meteosat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -.
+        /// </summary>
+        internal static string DefaultTimerDefaultTextNoDate {
+            get {
+                return ResourceManager.GetString("DefaultTimerDefaultTextNoDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 5.
         /// </summary>
         internal static string DefaultTimerInterval {
