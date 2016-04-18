@@ -15,7 +15,7 @@
 
             var imageDownloader = new ImageDownloader();
             imageDownloader.SaveToFile(Configuration.Username, Configuration.Password, temporaryFileHandler.FullPath,
-                Configuration.IsGridEnabled, Configuration.MaximumRetries, Configuration.HoursToSubstract);
+                Configuration.IsGridEnabled, Configuration.MaximumRetries, Configuration.HoursToSubtract);
 
             var setter = new Setter();
             setter.SetWallpaper(temporaryFileHandler.FullPath, Configuration.DesktopStyle);

@@ -23,7 +23,7 @@ namespace meteosat.model
             return credentialCache;
         }
 
-        public void SaveToFile(string username, string password, string imagePath, bool isGridEnabled, int maximumRetries, int hoursToSubstract)
+        public void SaveToFile(string username, string password, string imagePath, bool isGridEnabled, int maximumRetries, int hoursToSubtract)
         {
             using (var webClient = new WebClient())
             {
@@ -31,7 +31,7 @@ namespace meteosat.model
                 var numberOfRetries = 0;
                 while (!hasDownloadedFile && numberOfRetries <= maximumRetries)
                 {
-                    var url = GetUrl(isGridEnabled, numberOfRetries, hoursToSubstract);
+                    var url = GetUrl(isGridEnabled, numberOfRetries, hoursToSubtract);
                     webClient.Credentials = GetCredential(url, username, password);
                     try
                     {
@@ -50,17 +50,16 @@ namespace meteosat.model
             }
         }
 
-        private string GetUrl(bool isGridEnabled, int numberOfRetries, int hoursToSubstract)
+        private string GetUrl(bool isGridEnabled, int numberOfRetries, int hoursToSubtract)
         {
-            var currentDatetime = DateTime.UtcNow;
-            var usedDateTime = currentDatetime.Subtract(TimeSpan.FromHours(hoursToSubstract));
+            var usedDateTime = DateTime.UtcNow.Subtract(TimeSpan.FromHours(hoursToSubtract));
             usedDateTime = usedDateTime.Subtract(TimeSpan.FromHours(numberOfRetries * 3));
             var fixedHour = ((int)(usedDateTime.Hour / 3)) * 3;
             var lastImageHourAvailable = String.Format(fixedHour == 0 ? UrlZeroFormat : UrlNoFillFormat, fixedHour);
             var gridTextForUrl = isGridEnabled ? "_grid" : "";
             return String.Format(
                     "http://www.sat.dundee.ac.uk/xrit/000.0E/MSG/{0}/{1}/{2}/{3}/{0}_{1}_{2}_{3}_MSG3_16_S2{4}.jpeg",
-                    currentDatetime.Year, currentDatetime.Month, currentDatetime.Day, lastImageHourAvailable,
+                    usedDateTime.Year, usedDateTime.Month, usedDateTime.Day, lastImageHourAvailable,
                     gridTextForUrl);
         }
     }

@@ -61,6 +61,69 @@ namespace meteosat.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fit.
+        /// </summary>
+        internal static string DefaultOptionDesktopStyle {
+            get {
+                return ResourceManager.GetString("DefaultOptionDesktopStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.
+        /// </summary>
+        internal static string DefaultOptionHoursToSubtract {
+            get {
+                return ResourceManager.GetString("DefaultOptionHoursToSubtract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to False.
+        /// </summary>
+        internal static string DefaultOptionIsGridEnabled {
+            get {
+                return ResourceManager.GetString("DefaultOptionIsGridEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5.
+        /// </summary>
+        internal static string DefaultOptionMaximumRetries {
+            get {
+                return ResourceManager.GetString("DefaultOptionMaximumRetries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string DefaultOptionPassword {
+            get {
+                return ResourceManager.GetString("DefaultOptionPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to qwerty.
+        /// </summary>
+        internal static string DefaultOptionUsername {
+            get {
+                return ResourceManager.GetString("DefaultOptionUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5.
+        /// </summary>
+        internal static string DefaultTimerInterval {
+            get {
+                return ResourceManager.GetString("DefaultTimerInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon TrayIcon {

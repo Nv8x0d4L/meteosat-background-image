@@ -98,10 +98,12 @@
     </Compile>
     <Compile Include="viewModel\CommandHandler\EmptyCommandHandler.cs" />
     <Compile Include="viewModel\CommandHandler\ParameterizedCommandHandler.cs" />
+    <Compile Include="viewModel\DefaultValues.cs" />
     <Compile Include="viewModel\MainWindowViewModel.cs" />
     <Compile Include="viewModel\modelObjects\OptionsViewModel.cs" />
     <Compile Include="viewModel\modelObjects\StyleConverter.cs" />
     <Compile Include="viewModel\modelObjects\StyleViewModel.cs" />
+    <Compile Include="viewModel\TimerViewModel.cs" />
     <Compile Include="view\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

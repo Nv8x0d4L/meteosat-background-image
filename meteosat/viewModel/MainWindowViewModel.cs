@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using log4net;
 using meteosat.model;
 using meteosat.model.Config;
 using meteosat.viewModel.CommandHandler;
@@ -11,7 +12,11 @@ namespace meteosat.viewModel
 {
     public class MainWindowViewModel
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindowViewModel));
+
         public OptionsViewModel Options { get; set; }
+        public TimerViewModel Timer { get; set; }
+
         public ParameterizedCommandHandler<PasswordBox> SendCommand { get; set; }
         public EmptyCommandHandler ExitCommand { get; set; }
         public ParameterizedCommandHandler<PasswordBox> SaveCommand { get; set; }
@@ -22,6 +27,7 @@ namespace meteosat.viewModel
         public MainWindowViewModel()
         {
             Options = new OptionsViewModel(AppDomain.CurrentDomain.BaseDirectory);
+            Timer = new TimerViewModel();
             _configHandler = new ConfigHandler(Options.InputDirectory);
 
             SendCommand = new ParameterizedCommandHandler<PasswordBox>(SendAction);
@@ -32,18 +38,20 @@ namespace meteosat.viewModel
 
         private void SaveAction(PasswordBox parameter)
         {
+            Logger.Info("Save");
             Options.Password = parameter.Password;
             _configHandler.WriteConfig(Options.OptionsModel);
         }
 
         private void LoadAction(PasswordBox parameter)
         {
+            Logger.Info("Load");
             var tempOptionsModel = _configHandler.ReadConfig();
             Options.Username = tempOptionsModel.Username;
             Options.InputDirectory = tempOptionsModel.InputDirectory;
             Options.IsGridEnabled = tempOptionsModel.IsGridEnabled;
             Options.MaximumRetries = tempOptionsModel.MaximumRetries;
-            Options.HoursToSubstract = tempOptionsModel.HoursToSubstract;
+            Options.HoursToSubtract = tempOptionsModel.HoursToSubtract;
             Options.SetDesktopStyleWithModel(tempOptionsModel.DesktopStyle);
             Options.Password = "";
             parameter.Password = tempOptionsModel.Password;
@@ -51,11 +59,13 @@ namespace meteosat.viewModel
 
         private void ExitAction()
         {
+            Logger.Info("Exit");
             Application.Current.Shutdown(0);
         }
 
         public void SendAction(PasswordBox parameter)
         {
+            Logger.Info("Send");
             Options.Password = parameter.Password;
             var worker = new Worker(this.Options.OptionsModel);
             var backgroundWorker = new BackgroundWorker();

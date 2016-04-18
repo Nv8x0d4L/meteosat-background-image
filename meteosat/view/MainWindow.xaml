@@ -1,4 +1,4 @@
-﻿<Window x:Class="meteosat.view.MainWindow"
+﻿<Window x:Name="window" x:Class="meteosat.view.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:meteosat.viewModel"
         xmlns:modelObjects="clr-namespace:meteosat.viewModel.modelObjects"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="411" Width="649"
         ResizeMode="NoResize" SizeToContent="WidthAndHeight" Closing="Window_Closing">
     <Window.Resources>
         <viewModel:MainWindowViewModel x:Key="MainWindowViewModel" />
@@ -24,9 +24,11 @@
         <system:String x:Key="Tooltip-Enable-Grid">If this option is present, then an image with grid will be used.</system:String>
         <system:String x:Key="Tooltip-Maximum-Retries">Number of Attempts to download images, including earlier hours.</system:String>
         <system:String x:Key="Tooltip-Desktop-Style">Desktop style for the wallpaper to use.</system:String>
-        <system:String x:Key="Tooltip-Substract-Hours">How many hours to substract from the current time. Used for debugging.</system:String>
-        <system:Double x:Key="Label-Length">120</system:Double>
-        <system:Double x:Key="Input-Length">200</system:Double>
+        <system:String x:Key="Tooltip-Subtract-Hours">How many hours to subtract from the current time. Used for debugging.</system:String>
+        <system:String x:Key="Tooltip-Timer-Interval">The time in minutes after which the program should check for a new image again.</system:String>
+        <system:Double x:Key="Label-Length">150</system:Double>
+        <system:Double x:Key="Input-Length">300</system:Double>
+        <system:Double x:Key="Slider-Small-Length">260</system:Double>
     </Window.Resources>
     <StackPanel DataContext="{StaticResource MainWindowViewModel}">
         <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Username}">
@@ -55,7 +57,8 @@
             <Label Width="{StaticResource Label-Length}" Content="Maximum Retries:"/>
             <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
                 <Slider Margin="5" Value="{Binding Options.MaximumRetries}"
-                        Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" Width="150"
+                        Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
+                        Width="{StaticResource Slider-Small-Length}"
                         TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
                 <Label Content="{Binding Options.MaximumRetries, StringFormat=\{0:00}"/>
             </StackPanel>
@@ -68,32 +71,39 @@
                         IsTextSearchEnabled="False" SelectedIndex="2"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Substract-Hours}">
-            <Label Width="{StaticResource Label-Length}" Content="Hours to Substract:"/>
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Subtract-Hours}">
+            <Label Width="{StaticResource Label-Length}" Content="Hours to Subtract:"/>
             <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
                 <Slider Margin="5" Minimum="0" Maximum="24" SmallChange="1" LargeChange="5" 
-                        Width="150" Value="{Binding Options.HoursToSubstract}" 
-                            TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
-                <Label Content="{Binding Options.HoursToSubstract, StringFormat=\{0:00}"/>
+                        Width="{StaticResource Slider-Small-Length}" Value="{Binding Options.HoursToSubtract}" 
+                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                <Label Content="{Binding Options.HoursToSubtract, StringFormat=\{0:00}"/>
             </StackPanel>
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal">
-            <Button Width="{StaticResource Input-Length}" HorizontalAlignment="Right" 
-                    MinWidth="80" Margin="3" Content="Save" 
-                    Command="{Binding SaveCommand}"  CommandParameter="{Binding ElementName=InputPassword}"/>
-            <Button Width="{StaticResource Input-Length}" HorizontalAlignment="Right" 
-                    MinWidth="80" Margin="3" Content="Load" 
-                    Command="{Binding LoadCommand}"  CommandParameter="{Binding ElementName=InputPassword}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
-            <Button Width="{StaticResource Input-Length}" HorizontalAlignment="Right" 
-                    MinWidth="80" Margin="3" Content="Send"
-                    Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=InputPassword}"/>
-            <Button Width="{StaticResource Input-Length}" HorizontalAlignment="Right" 
-                    MinWidth="80" Margin="3" Content="Exit"
-                    Command="{Binding ExitCommand}" />
+            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
+                    Content="Save" Command="{Binding SaveCommand}"  
+                    CommandParameter="{Binding ElementName=InputPassword}"/>
+            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
+                    Content="Load" Command="{Binding LoadCommand}"
+                    CommandParameter="{Binding ElementName=InputPassword}"/>
+            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3"
+                    Content="Send Now" Command="{Binding SendCommand}" 
+                    CommandParameter="{Binding ElementName=InputPassword}"/>
+            <Button HorizontalAlignment="Right" MinWidth="80" Margin="3" 
+                    Content="Exit" Command="{Binding ExitCommand}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" ToolTip="{StaticResource Tooltip-Timer-Interval}">
+            <Label Width="{StaticResource Label-Length}" Content="Timer Interval in Minutes:"/>
+            <StackPanel Width="{StaticResource Input-Length}" Orientation="Horizontal">
+                <Slider Margin="5" Value="{Binding Timer.Interval}"
+                        Minimum="5" Maximum="60" SmallChange="5" LargeChange="15" 
+                        Width="{StaticResource Slider-Small-Length}"
+                        TickPlacement="BottomRight" IsSnapToTickEnabled="True" />
+                <Label Content="{Binding Timer.Interval, StringFormat=\{0:00}"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Window>

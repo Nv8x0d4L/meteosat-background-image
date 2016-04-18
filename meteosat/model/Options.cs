@@ -8,6 +8,6 @@
         public bool IsGridEnabled { get; set; }
         public int MaximumRetries { get; set; }
         public Style DesktopStyle { get; set; }
-        public int HoursToSubstract { get; set; }
+        public int HoursToSubtract { get; set; }
     }
 }

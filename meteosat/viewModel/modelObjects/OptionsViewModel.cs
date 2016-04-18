@@ -9,6 +9,7 @@ namespace meteosat.viewModel.modelObjects
     {
         public Options OptionsModel { get; private set; }
 
+        private const string ConfigurationTextUsername = "DefaultOptionUsername";
         public string Username
         {
             get { return OptionsModel.Username; }
@@ -20,6 +21,7 @@ namespace meteosat.viewModel.modelObjects
             }
         }
 
+        private const string ConfigurationTextPassword = "DefaultOptionPassword";
         public string Password
         {
             get { return OptionsModel.Password; }
@@ -42,6 +44,7 @@ namespace meteosat.viewModel.modelObjects
             }
         }
 
+        private const string ConfigurationTextIsGridEnabled = "DefaultOptionIsGridEnabled";
         public bool IsGridEnabled
         {
             get { return OptionsModel.IsGridEnabled; }
@@ -53,6 +56,7 @@ namespace meteosat.viewModel.modelObjects
             }
         }
 
+        private const string ConfigurationTextMaximumRetries = "DefaultOptionMaximumRetries";
         public int MaximumRetries
         {
             get { return OptionsModel.MaximumRetries; }
@@ -64,6 +68,7 @@ namespace meteosat.viewModel.modelObjects
             }
         }
 
+        private const string ConfigurationTextDesktopStyle = "DefaultOptionDesktopStyle";
         public StyleViewModel DesktopStyle
         {
             get
@@ -86,27 +91,29 @@ namespace meteosat.viewModel.modelObjects
             OnPropertyChanged(nameof(DesktopStyle));
         }
 
-        public int HoursToSubstract
+        private const string ConfigurationTextHoursToSubtract = "DefaultOptionHoursToSubtract";
+        public int HoursToSubtract
         {
-            get { return OptionsModel.HoursToSubstract; }
+            get { return OptionsModel.HoursToSubtract; }
             set
             {
-                if (value == OptionsModel.HoursToSubstract) return;
-                OptionsModel.HoursToSubstract = value;
-                OnPropertyChanged(nameof(HoursToSubstract));
+                if (value == OptionsModel.HoursToSubtract) return;
+                OptionsModel.HoursToSubtract = value;
+                OnPropertyChanged(nameof(HoursToSubtract));
             }
         }
+
 
         public OptionsViewModel(string baseDirectory)
         {
             OptionsModel = new Options();
-            Username = "qwerty";
-            Password = "asdf";
+            Username = DefaultValues.GetString(ConfigurationTextUsername);
+            Password = DefaultValues.GetString(ConfigurationTextPassword);
             InputDirectory = baseDirectory;
-            IsGridEnabled = false;
-            MaximumRetries = 5;
-            DesktopStyle = StyleViewModel.Fit;
-            HoursToSubstract = 0;
+            IsGridEnabled = bool.Parse(DefaultValues.GetString(ConfigurationTextIsGridEnabled));
+            MaximumRetries = DefaultValues.GetInteger(ConfigurationTextMaximumRetries);
+            DesktopStyle = DefaultValues.GetStyleViewModel(ConfigurationTextDesktopStyle);
+            HoursToSubtract = DefaultValues.GetInteger(ConfigurationTextHoursToSubtract);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
