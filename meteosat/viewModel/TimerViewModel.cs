@@ -18,8 +18,39 @@ namespace meteosat.viewModel
 
                 if (value == _interval) return;
                 _interval = value;
-                dispatcherTimer.Interval = new TimeSpan(0, value, 0);
+                RefreshDispatcherTimerIntervall();
                 OnPropertyChanged(nameof(Interval));
+            }
+        }
+
+        private void RefreshDispatcherTimerIntervall()
+        {
+            switch (IntervalIn)
+            {
+                case IntervallMeasurement.Hours:
+                    dispatcherTimer.Interval = new TimeSpan(Interval, 0, 0);
+                    break;
+                case IntervallMeasurement.Minutes:
+                    dispatcherTimer.Interval = new TimeSpan(0, Interval, 0);
+                    break;
+                case IntervallMeasurement.Seconds:
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, Interval);
+                    break;
+                default:
+                    dispatcherTimer.Interval = new TimeSpan(0, Interval, 0);
+                    break;
+            }
+        }
+
+        private IntervallMeasurement _intervallMeasurement;
+        public IntervallMeasurement IntervalIn {
+            get { return _intervallMeasurement; }
+            set
+            {
+                if (value == _intervallMeasurement) return;
+                _intervallMeasurement = value;
+                RefreshDispatcherTimerIntervall();
+                OnPropertyChanged(nameof(IntervalIn));
             }
         }
 
@@ -92,6 +123,7 @@ namespace meteosat.viewModel
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick;
+            IntervalIn = IntervallMeasurement.Minutes;
             Interval = DefaultValues.GetInteger(ConfigurationTextInterval);
             LastRun = null;
             NextRun = null;
@@ -139,8 +171,18 @@ namespace meteosat.viewModel
         public void Start()
         {
             dispatcherTimer.Start();
-            NextRun = DateTime.Now.AddMinutes(Interval);
+            RefreshNextTexts();
+        }
+
+        private void RefreshNextTexts()
+        {
+            RefreshNextRun();
             RefreshNextRunIn();
+        }
+
+        private void RefreshNextRun()
+        {
+            NextRun = DateTime.Now.Add(dispatcherTimer.Interval);
         }
 
         public bool IsEnabled => dispatcherTimer.IsEnabled;
@@ -148,6 +190,7 @@ namespace meteosat.viewModel
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
+            RefreshNextTexts();
             Tick?.Invoke(sender, e);
         }
     }
