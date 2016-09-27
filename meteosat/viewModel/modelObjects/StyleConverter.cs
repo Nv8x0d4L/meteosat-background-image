@@ -5,6 +5,11 @@ namespace meteosat.viewModel.modelObjects
 {
     class StyleConverter
     {
+        private const string ModelCouldNotBeConverted = "model {0} could not be converted.";
+        private const string UnableToParseStyleviewmodelFromValue = "Unable to parse StyleViewModel from value {0}";
+        private const string UnableToParseStyleFromValue = "Unable to parse Style from value {0}";
+        private const string ViewmodelCouldNotBeConverted = "viewModel {0} could not be converted.";
+
         public static StyleViewModel ModelToViewModel(Style model)
         {
             var name = Enum.GetName(typeof(Style), model);
@@ -14,7 +19,7 @@ namespace meteosat.viewModel.modelObjects
             }
             else
             {
-                throw new Exception($"model {model} could not be converted.");
+                throw new Exception(string.Format(ModelCouldNotBeConverted, model));
             }
         }
 
@@ -27,7 +32,7 @@ namespace meteosat.viewModel.modelObjects
             }
             else
             {
-                throw new Exception($"Unable to parse StyleViewModel from value {name}");
+                throw new Exception(string.Format(UnableToParseStyleviewmodelFromValue, name));
             }
         }
 
@@ -41,7 +46,7 @@ namespace meteosat.viewModel.modelObjects
             }
             else
             {
-                throw new Exception($"viewModel {viewModel} could not be converted.");
+                throw new Exception(string.Format(ViewmodelCouldNotBeConverted, viewModel));
             }
         }
 
@@ -54,7 +59,7 @@ namespace meteosat.viewModel.modelObjects
             }
             else
             {
-                throw new Exception($"Unable to parse Style from value {name}");
+                throw new Exception(string.Format(UnableToParseStyleFromValue, name));
             }
         }
     }

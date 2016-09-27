@@ -12,6 +12,10 @@ namespace meteosat.view
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string CaptionShow = "Show";
+        private const string CaptionHide = "Hide";
+        private const string CaptionExit = "Exit";
+        private const string TrayIconResourceName = "TrayIcon";
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindow));
         public NotifyIcon NotifyIcon { get; set; }
 
@@ -41,13 +45,13 @@ namespace meteosat.view
         private void InitializeNotifyIcon()
         {
             var contextMenu = new ContextMenu();
-            contextMenu.MenuItems.Add("Show", (s, e) => ShowWindow());
-            contextMenu.MenuItems.Add("Hide", (s, e) => this.Hide());
-            contextMenu.MenuItems.Add("Exit", (s, e) => Application.Current.Shutdown(0));
+            contextMenu.MenuItems.Add(CaptionShow, (s, e) => ShowWindow());
+            contextMenu.MenuItems.Add(CaptionHide, (s, e) => this.Hide());
+            contextMenu.MenuItems.Add(CaptionExit, (s, e) => Application.Current.Shutdown(0));
 
             NotifyIcon = new NotifyIcon
             {
-                Icon = (Icon)Properties.Resources.ResourceManager.GetObject("TrayIcon"),
+                Icon = (Icon)Properties.Resources.ResourceManager.GetObject(TrayIconResourceName),
                 Visible = true,
                 ContextMenu = contextMenu
             };

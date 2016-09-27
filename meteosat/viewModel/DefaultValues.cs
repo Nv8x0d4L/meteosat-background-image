@@ -5,6 +5,9 @@ namespace meteosat.viewModel
 {
     public class DefaultValues
     {
+        private const string UnableToParseDefaultValueForKeyTo = "Unable to parse default value {0} for key {1} to {2}";
+        private const string DefaultValueForNotFound = "Default value for {0} not found";
+
         public static string GetString(string key)
         {
             var value = Properties.Resources.ResourceManager.GetString(key);
@@ -14,7 +17,7 @@ namespace meteosat.viewModel
             }
             else
             {
-                throw new Exception($"Default value for {key} not found");
+                throw new Exception(string.Format(DefaultValueForNotFound,  key));
             }
         }
 
@@ -28,7 +31,7 @@ namespace meteosat.viewModel
             }
             else
             {
-                throw new Exception($"Unable to parse default value {value} for key {key} to int");
+                throw new Exception(string.Format(UnableToParseDefaultValueForKeyTo, value, key, parsedValue.GetType().ToString()));
             }
         }
 
@@ -42,7 +45,7 @@ namespace meteosat.viewModel
             }
             else
             {
-                throw new Exception($"Unable to parse default value {value} for key {key} to bool");
+                throw new Exception(string.Format(UnableToParseDefaultValueForKeyTo, value, key, parsedValue.GetType().ToString()));
             }
         }
 

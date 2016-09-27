@@ -55,6 +55,7 @@ namespace meteosat.viewModel
         }
 
         private const string ConfigurationTextDefaultTextNoDate = "DefaultTimerDefaultTextNoDate";
+        private const string NextRunFormat = "{0:00}:{1:00}:{2:00}";
         private string _defaultTextNoDate;
         public string DefaultTextNoDate
         {
@@ -140,7 +141,8 @@ namespace meteosat.viewModel
             if (NextRun.HasValue)
             {
                 var nextRunIn = NextRun.Value - DateTime.Now;
-                NextRunInString = $"{nextRunIn.Hours:00}:{nextRunIn.Minutes:00}:{nextRunIn.Seconds:00}";
+                NextRunInString = string.Format(NextRunFormat, nextRunIn.Hours, nextRunIn.Minutes,
+                    nextRunIn.Seconds);
             }
             else
             {
