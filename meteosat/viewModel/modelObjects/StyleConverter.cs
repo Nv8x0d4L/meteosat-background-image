@@ -1,14 +1,15 @@
 ﻿using System;
 using meteosat.model;
+using meteosat.util;
 
 namespace meteosat.viewModel.modelObjects
 {
     class StyleConverter
     {
-        private const string ModelCouldNotBeConverted = "model {0} could not be converted.";
-        private const string UnableToParseStyleviewmodelFromValue = "Unable to parse StyleViewModel from value {0}";
-        private const string UnableToParseStyleFromValue = "Unable to parse Style from value {0}";
-        private const string ViewmodelCouldNotBeConverted = "viewModel {0} could not be converted.";
+        private static readonly string ModelCouldNotBeConverted = DefaultValues.GetString("ModelCouldNotBeConverted");
+        private static readonly string UnableToParseStyleviewmodelFromValue = DefaultValues.GetString("UnableToParseStyleviewmodelFromValue");
+        private static readonly string UnableToParseStyleFromValue = DefaultValues.GetString("UnableToParseStyleFromValue");
+        private static readonly string ViewmodelCouldNotBeConverted = DefaultValues.GetString("ViewmodelCouldNotBeConverted");
 
         public static StyleViewModel ModelToViewModel(Style model)
         {

@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AuthType" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="CaptionExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="CaptionHide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="CaptionShow" xml:space="preserve">
+    <value>Show</value>
+  </data>
   <data name="DefaultOptionDesktopStyle" xml:space="preserve">
     <value>Fit</value>
   </data>
@@ -141,8 +153,104 @@
   <data name="DefaultTimerInterval" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="DefaultValueNotFound" xml:space="preserve">
+    <value>Default value for key {0} not found</value>
+  </data>
+  <data name="ErrorFormat" xml:space="preserve">
+    <value>---
+URL: {0}
+Status: {1}
+Response: {2}
+Message: {3}</value>
+  </data>
+  <data name="GridTextForUrl" xml:space="preserve">
+    <value>_grid</value>
+  </data>
+  <data name="MeteosatJpg" xml:space="preserve">
+    <value>meteosat.jpg</value>
+  </data>
+  <data name="MeteosatURL" xml:space="preserve">
+    <value>http://www.sat.dundee.ac.uk/xrit/000.0E/MSG/{0}/{1}/{2}/{3}/{0}_{1}_{2}_{3}_MSG3_16_S2{4}.jpeg</value>
+  </data>
+  <data name="ModelCouldNotBeConverted" xml:space="preserve">
+    <value>model {0} could not be converted.</value>
+  </data>
+  <data name="NextRunFormat" xml:space="preserve">
+    <value>{0:00}:{1:00}:{2:00}</value>
+  </data>
+  <data name="QuittingText" xml:space="preserve">
+    <value>Quitting...</value>
+  </data>
+  <data name="RetryingText" xml:space="preserve">
+    <value>Retrying...</value>
+  </data>
+  <data name="SendWinIniChange" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SetDesktopWallpaper" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="SuccessFormat" xml:space="preserve">
+    <value>---
+URL: {0}
+Status: success</value>
+  </data>
+  <data name="Tilewallpaper" xml:space="preserve">
+    <value>TileWallpaper</value>
+  </data>
+  <data name="TilewallpaperValueFalse" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TilewallpaperValueTrue" xml:space="preserve">
+    <value>1</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="TrayIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TrayIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TrayIconResourceName" xml:space="preserve">
+    <value>TrayIcon</value>
+  </data>
+  <data name="UnableToParseDefaultValueForKeyTo" xml:space="preserve">
+    <value>Unable to parse default value {0} for key {1} to {2}</value>
+  </data>
+  <data name="UnableToParseStyleFromValue" xml:space="preserve">
+    <value>Unable to parse Style from value {0}</value>
+  </data>
+  <data name="UnableToParseStyleviewmodelFromValue" xml:space="preserve">
+    <value>Unable to parse StyleViewModel from value {0}</value>
+  </data>
+  <data name="UParam" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="UpdateIniFile" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="UrlNoFillFormat" xml:space="preserve">
+    <value>{0:0}00</value>
+  </data>
+  <data name="UrlZeroFormat" xml:space="preserve">
+    <value>{0:0}</value>
+  </data>
+  <data name="ViewmodelCouldNotBeConverted" xml:space="preserve">
+    <value>viewModel {0} could not be converted.</value>
+  </data>
+  <data name="WallpaperRegistryKey" xml:space="preserve">
+    <value>Control Panel\Desktop</value>
+  </data>
+  <data name="Wallpaperstyle" xml:space="preserve">
+    <value>WallpaperStyle</value>
+  </data>
+  <data name="WallpaperstyleStrechValue" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="WallpaperstyleValueCenter" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="WallpaperstyleValueFit" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="WallpaperstyleValueTile" xml:space="preserve">
+    <value>1</value>
   </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using meteosat.Annotations;
 using meteosat.model;
+using meteosat.util;
 
 namespace meteosat.viewModel.modelObjects
 {

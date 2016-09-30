@@ -1,22 +1,25 @@
 ﻿using System.Runtime.InteropServices;
+using meteosat.util;
 using Microsoft.Win32;
 
 namespace meteosat.model
 {
     public class Setter
     {
-        public const int SetDesktopWallpaper = 20;
-        public const int UpdateIniFile = 0x01;
-        public const int SendWinIniChange = 0x02;
-        private const string Wallpaperstyle = @"WallpaperStyle";
-        private const string Tilewallpaper = @"TileWallpaper";
-        private const string WallpaperstyleStrechValue = "2";
-        private const string WallpaperstyleValueCenter = "1";
-        private const string WallpaperstyleValueTile = "1";
-        private const string WallpaperstyleValueFit = "6";
-        private const string TilewallpaperValueFalse = "0";
-        private const string TilewallpaperValueTrue = "1";
-        private const string WallpaperRegistryKey = @"Control Panel\Desktop";
+        private static readonly int SetDesktopWallpaper = DefaultValues.GetInteger("SetDesktopWallpaper");
+        private static readonly int UpdateIniFile = DefaultValues.GetInteger("UpdateIniFile");
+        private static readonly int SendWinIniChange = DefaultValues.GetInteger("SendWinIniChange");
+        private static readonly int UParam = DefaultValues.GetInteger("UParam");
+
+        private static readonly string Wallpaperstyle = DefaultValues.GetString("Wallpaperstyle");
+        private static readonly string Tilewallpaper = DefaultValues.GetString("Tilewallpaper");
+        private static readonly string WallpaperstyleStrechValue = DefaultValues.GetString("WallpaperstyleStrechValue");
+        private static readonly string WallpaperstyleValueCenter = DefaultValues.GetString("WallpaperstyleValueCenter");
+        private static readonly string WallpaperstyleValueTile = DefaultValues.GetString("WallpaperstyleValueTile");
+        private static readonly string WallpaperstyleValueFit = DefaultValues.GetString("WallpaperstyleValueFit");
+        private static readonly string TilewallpaperValueFalse = DefaultValues.GetString("TilewallpaperValueFalse");
+        private static readonly string TilewallpaperValueTrue = DefaultValues.GetString("TilewallpaperValueTrue");
+        private static readonly string WallpaperRegistryKey = DefaultValues.GetString("WallpaperRegistryKey");
         private const string User32Dll = "user32.dll";
 
         [DllImport(User32Dll, SetLastError = true, CharSet = CharSet.Auto)]
@@ -24,7 +27,7 @@ namespace meteosat.model
 
         public void SetWallpaper(string path, Style style)
         {
-            SystemParametersInfo(SetDesktopWallpaper, 0, path, UpdateIniFile | SendWinIniChange);
+            SystemParametersInfo(SetDesktopWallpaper, UParam, path, UpdateIniFile | SendWinIniChange);
             RegistryKey key = Registry.CurrentUser.OpenSubKey(WallpaperRegistryKey, true);
             if (key != null)
             {

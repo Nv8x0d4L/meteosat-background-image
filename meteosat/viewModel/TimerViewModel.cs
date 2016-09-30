@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using meteosat.Annotations;
+using meteosat.util;
 
 namespace meteosat.viewModel
 {
@@ -55,7 +56,7 @@ namespace meteosat.viewModel
         }
 
         private const string ConfigurationTextDefaultTextNoDate = "DefaultTimerDefaultTextNoDate";
-        private const string NextRunFormat = "{0:00}:{1:00}:{2:00}";
+        private static readonly string NextRunFormat = DefaultValues.GetString("NextRunFormat");
         private string _defaultTextNoDate;
         public string DefaultTextNoDate
         {

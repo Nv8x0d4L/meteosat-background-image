@@ -5,12 +5,13 @@ namespace meteosat.model.Config
 {
     public class ConfigHandler
     {
+        private const string MeteosatConfig = "meteosat.config";
         private ConfigFileHandler Config { get; set; }
         private EncryptionHandler Crypt { get; set; }
 
         public ConfigHandler(string directory)
         {
-            string configPath = Path.Combine(directory, "meteosat.config");
+            string configPath = Path.Combine(directory, MeteosatConfig);
             Config = new ConfigFileHandler(configPath);
             Crypt = new EncryptionHandler();
         }

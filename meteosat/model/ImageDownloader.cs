@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Net;
 using log4net;
+using meteosat.util;
 
 namespace meteosat.model
 {
     public class ImageDownloader
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(ImageDownloader));
-
-        private const string RetryingText = "Retrying...";
-        private const string QuittingText = "Quitting...";
-        private const string SuccessFormat = "---\nURL: {0}\nStatus: success";
-        private const string ErrorFormat = "---\nURL: {0}\nStatus: {1}\nResponse: {2}\nMessage: {3}";
-        private const string UrlZeroFormat = "{0:0}";
-        private const string UrlNoFillFormat = "{0:0}00";
-        private const string GridTextForUrl = "_grid";
-        private const string AuthType = "Basic";
-
-        private const string MeteosatURL =
-            "http://www.sat.dundee.ac.uk/xrit/000.0E/MSG/{0}/{1}/{2}/{3}/{0}_{1}_{2}_{3}_MSG3_16_S2{4}.jpeg";
+        
+        private static readonly string RetryingText = DefaultValues.GetString("RetryingText");
+        private static readonly string QuittingText = DefaultValues.GetString("QuittingText");
+        private static readonly string SuccessFormat = DefaultValues.GetString("SuccessFormat");
+        private static readonly string ErrorFormat = DefaultValues.GetString("ErrorFormat");
+        private static readonly string UrlZeroFormat = DefaultValues.GetString("UrlZeroFormat");
+        private static readonly string UrlNoFillFormat = DefaultValues.GetString("UrlNoFillFormat");
+        private static readonly string GridTextForUrl = DefaultValues.GetString("GridTextForUrl");
+        private static readonly string AuthType = DefaultValues.GetString("AuthType");
+        private static readonly string MeteosatURL = DefaultValues.GetString("MeteosatURL");
 
         private CredentialCache GetCredential(string url, string username, string password)
         {

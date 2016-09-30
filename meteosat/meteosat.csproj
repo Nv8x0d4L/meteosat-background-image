@@ -107,7 +107,7 @@
     </Compile>
     <Compile Include="viewModel\CommandHandler\EmptyCommandHandler.cs" />
     <Compile Include="viewModel\CommandHandler\ParameterizedCommandHandler.cs" />
-    <Compile Include="viewModel\DefaultValues.cs" />
+    <Compile Include="util\DefaultValues.cs" />
     <Compile Include="viewModel\IntervallMeasurement.cs" />
     <Compile Include="viewModel\MainWindowViewModel.cs" />
     <Compile Include="viewModel\modelObjects\OptionsViewModel.cs" />

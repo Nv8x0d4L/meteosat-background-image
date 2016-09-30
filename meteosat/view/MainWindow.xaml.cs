@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 using log4net;
 using Application = System.Windows.Application;
+using meteosat.util;
 
 namespace meteosat.view
 {
@@ -12,10 +13,10 @@ namespace meteosat.view
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string CaptionShow = "Show";
-        private const string CaptionHide = "Hide";
-        private const string CaptionExit = "Exit";
-        private const string TrayIconResourceName = "TrayIcon";
+        private static readonly string CaptionShow = DefaultValues.GetString("CaptionShow");
+        private static readonly string CaptionHide = DefaultValues.GetString("CaptionHide");
+        private static readonly string CaptionExit = DefaultValues.GetString("CaptionExit");
+        private static readonly string TrayIconResourceName = DefaultValues.GetString("TrayIconResourceName");
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainWindow));
         public NotifyIcon NotifyIcon { get; set; }
 
