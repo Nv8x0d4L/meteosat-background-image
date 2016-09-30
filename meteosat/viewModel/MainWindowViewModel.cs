@@ -34,9 +34,7 @@ namespace meteosat.viewModel
             Options = new OptionsViewModel(AppDomain.CurrentDomain.BaseDirectory);
             Timer = new TimerViewModel();
             Timer.Tick += dispatcherTimer_Tick;
-
-            _configHandler = new ConfigHandler(Options.InputDirectory);
-
+            
             SendCommand = new ParameterizedCommandHandler<PasswordBox>(SendAction);
             ExitCommand = new EmptyCommandHandler(ExitAction);
             ConfigSaveCommand = new ParameterizedCommandHandler<PasswordBox>(ConfigSaveAction);
@@ -44,6 +42,8 @@ namespace meteosat.viewModel
             TimerStartCommand = new ParameterizedCommandHandler<PasswordBox>(TimerStartAction);
             TimerStopCommand = new EmptyCommandHandler(TimerStop);
             ShowAboutCommand = new EmptyCommandHandler(ShowAboutAction);
+
+            _configHandler = new ConfigHandler(Options.InputDirectory, Options.OptionsModel);
 
             About = new AboutBox();
         }
@@ -85,7 +85,7 @@ namespace meteosat.viewModel
         private void ConfigLoadAction(PasswordBox parameter)
         {
             Logger.Info("Load");
-            var tempOptionsModel = _configHandler.ReadConfig();
+            var tempOptionsModel = _configHandler.ReadOrCreateConfig();
             Options.Username = tempOptionsModel.Username;
             Options.InputDirectory = tempOptionsModel.InputDirectory;
             Options.IsGridEnabled = tempOptionsModel.IsGridEnabled;

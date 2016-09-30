@@ -8,12 +8,14 @@ namespace meteosat.model.Config
         private const string MeteosatConfig = "meteosat.config";
         private ConfigFileHandler Config { get; set; }
         private EncryptionHandler Crypt { get; set; }
+        private Options DefaultOptions { get; set; }
 
-        public ConfigHandler(string directory)
+        public ConfigHandler(string directory, Options options)
         {
-            string configPath = Path.Combine(directory, MeteosatConfig);
+            var configPath = Path.Combine(directory, MeteosatConfig);
             Config = new ConfigFileHandler(configPath);
             Crypt = new EncryptionHandler();
+            DefaultOptions = options;
         }
 
         public void WriteConfig(Options options)
@@ -23,7 +25,20 @@ namespace meteosat.model.Config
             this.Config.Write(json);
         }
 
-        public Options ReadConfig()
+        public Options ReadOrCreateConfig()
+        {
+            if (this.Config.Exists())
+            {
+                return this.ReadConfig();
+            }
+            else
+            {
+                this.WriteConfig(DefaultOptions);
+                return DefaultOptions;
+            }
+        }
+
+        private Options ReadConfig()
         {
             var json = this.Config.Read();
             var options = JsonConvert.DeserializeObject<Options>(json);

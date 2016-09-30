@@ -8,7 +8,7 @@
         xmlns:modelObjects="clr-namespace:meteosat.viewModel.modelObjects"
         mc:Ignorable="d"
         Title="MainWindow" Height="411" Width="649"
-        ResizeMode="NoResize" SizeToContent="WidthAndHeight" Closing="Window_Closing">
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight" Closing="Window_Closing" Loaded="window_Loaded">
     <Window.Resources>
         <viewModel:MainWindowViewModel x:Key="MainWindowViewModel" />
         <ObjectDataProvider x:Key="DesktopStyleDataFromEnum" MethodName="GetValues"
@@ -36,7 +36,7 @@
         <system:Double x:Key="Input-Length">300</system:Double>
         <system:Double x:Key="Slider-Small-Length">260</system:Double>
     </Window.Resources>
-    <StackPanel DataContext="{StaticResource MainWindowViewModel}">
+    <StackPanel DataContext="{StaticResource MainWindowViewModel}" Name="MainPanel">
         <Menu>
             <MenuItem Header="File">
                 <MenuItem Header="Exit" Command="{Binding ExitCommand}" />

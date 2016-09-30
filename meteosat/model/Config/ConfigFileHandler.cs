@@ -29,5 +29,10 @@ namespace meteosat.model.Config
                 return reader.ReadLine();
             }
         }
+
+        public bool Exists()
+        {
+            return File.Exists(FullPath);
+        }
     }
 }

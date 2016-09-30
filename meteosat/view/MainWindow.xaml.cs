@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using log4net;
 using Application = System.Windows.Application;
 using meteosat.util;
+using meteosat.viewModel;
 
 namespace meteosat.view
 {
@@ -79,6 +80,12 @@ namespace meteosat.view
         {
             this.Hide();
             e.Cancel = true;
+        }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = this.MainPanel.DataContext as MainWindowViewModel;
+            viewModel?.ConfigLoadCommand.Execute(InputPassword);
         }
     }
 }
